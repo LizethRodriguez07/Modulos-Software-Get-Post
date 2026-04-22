@@ -1,0 +1,70 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 9/04/2026, 2:09:40 p. m.
+    Author     : H-P
+*/
+/*fondo de pantalla*/
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #DDCFB4;
+}
+
+/*Datos peronales*/
+h2 {
+    color: #A3937E;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", "sans-serif";
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+ p {
+    text-align: center;
+    font-family: Cambria, 'Hoefler Text', 'Liberation Serif', Times, 'Times New Roman', serif;
+    color: #000000;
+    font-size: 18px;
+}
+
+contenedor {
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    padding: 8px;
+    border-radius: 8px;
+    outline: none;
+}
+
+input[type="text"], input[type="email"] {
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    outline: none;
+    margin: 10px 0;
+    
+}
+
+button {
+    font-family: 'annie-use-your-telescope';
+    color: #ECC998;
+    font-size: 16px;
+    cursor: pointer;
+    background-color:#625240;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin-top: 30px;
+    margin-left: 1150px;
+    font-weight: bold;
+    
+}
+
+/*producto*/
