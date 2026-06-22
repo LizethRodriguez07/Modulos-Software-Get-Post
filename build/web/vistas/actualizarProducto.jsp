@@ -38,11 +38,11 @@
             <!-- Formulario de Actualización -->
             <form action="${pageContext.request.contextPath}/productoControlador" method="POST" class="custom-form">
                 
-                <!-- Grid de Formulario (2 Columnas) -->
+                
                 <div class="form-grid">
                     <div class="input-group">
                         <label for="idproducto">Id (Lectura):</label>
-                        <!-- CORRECCIÓN: Se cambió name="idproducto" por name="idProducto" para que el controlador lo reciba correctamente -->
+                        
                         <input class="input-registro" type="text" id="idproducto" name="idProducto" value="<%= pro.getIdProducto() %>" readonly>
                     </div>
                     
@@ -72,10 +72,10 @@
                     </div>
                 </div>
 
-                <!-- Botones de Acción -->
+                <!-- Boton -->
                 <div class="form-actions">
                     <button type="submit" name="accion" value="Actualizar" class="btn-update">Actualizar Producto</button>
-                    <!-- CORRECCIÓN: Redirección al controlador en lugar de ir directo al JSP para no perder los datos del listado -->
+                    
                     <a href="${pageContext.request.contextPath}/productoControlador?accion=listado" class="btn-cancel">Cancelar</a>
                 </div>
                 
