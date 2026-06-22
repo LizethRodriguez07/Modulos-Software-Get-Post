@@ -71,14 +71,14 @@
                             <textarea class="input-registro" id="descriPcion" name="descriPcion" rows="3" placeholder="Detalla: Cantidad, Marca (Nike, Adidas, etc.), Talla, Color..." required></textarea>
                         </div>
                         
-                        <!-- SOLUCIÓN: Cambiado el name a 'selecEstado' para sincronizarse perfectamente con tu Servlet -->
+                        
                         <div class="input-group full-width">
                             <label for="estadoPago">Estado del Pedido / Pago:</label>
                             <input class="input-registro" type="text" id="estadoPago" name="selecEstado" placeholder="Ej: Completado / Pendiente por Despachar" required>
                         </div>
                     </div>
                     
-                    <!-- Botones de Acción Corregidos -->
+                    <!-- Boton -->
                     <div class="form-actions">
                         <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Pedido</button>
                         <a href="${pageContext.request.contextPath}/pedidosControlador?accion=listado" class="btn-cancel">Cancelar</a>
