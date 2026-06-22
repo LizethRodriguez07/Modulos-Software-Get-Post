@@ -23,11 +23,11 @@
         <%
            chat cht = (chat) request.getAttribute("lista");
             if (cht == null) {
-                cht = new chat(); // Respaldo de seguridad para evitar errores NullPointerException
+                cht = new chat(); 
             }
         %>
         
-        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <!-- Contenedor Principal -->
         <div class="form-wrapper">
             <div class="form-container edit-mode">
                 
@@ -54,7 +54,6 @@
                         
                         <div class="input-group">
                             <label for="clienteChat">Nombre Cliente:</label>
-                            <!-- CORREGIDO: Llamada correcta al método getClienteChat() en lugar de getMensajeria() -->
                             <input class="input-registro" type="text" id="clienteChat" name="clienteChat" value="<%= cht.getClienteChat() != null ? cht.getClienteChat() : "" %>" required>
                         </div>
                         
@@ -70,7 +69,7 @@
                         
                     </div>
                     
-                    <!-- Botones de Acción Estilizados con el CSS central -->
+                    <!-- Boton -->
                     <div class="form-actions">
                         <button type="submit" name="accion" value="Actualizar" class="btn-update">Actualizar Chat</button>
                         <a href="${pageContext.request.contextPath}/chatControlador?accion=listado" class="btn-cancel">Cancelar</a>
