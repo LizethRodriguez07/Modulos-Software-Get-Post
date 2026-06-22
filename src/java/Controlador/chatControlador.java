@@ -107,13 +107,11 @@ String listar = "vistas/listarChat.jsp";
             }
     
             case "Actualizar" -> {
-                // CORRECCIÓN CRÍTICA: Captura obligatoria del idChat enviado desde el formulario
                 int idChat = Integer.parseInt(request.getParameter("idChat"));
                 String clienteChat = request.getParameter("clienteChat");
                 String Mensajeria = request.getParameter("Mensajeria");
                 String estadoChat = request.getParameter("estadoChat");
                 
-                // Seteo usando tu objeto global incluyendo el ID indispensable para el WHERE SQL
                 cha.setIdChat(idChat); 
                 cha.setClienteChat(clienteChat);
                 cha.setMensajeria(Mensajeria);
