@@ -20,7 +20,7 @@
 </head>
 <body>
 
-    <!-- Contenedor general oscuro que hace juego con toda la aplicación -->
+    <!-- Contenedor general -->
     <div class="table-wrapper">
         <div class="table-container">
             
@@ -28,14 +28,14 @@
             <div class="table-header-section">
                 <h2>Gestión de Pedidos</h2>
                 
-                <!-- Grupo de botones de navegación superior corregidos con contextPath -->
+                
                 <div class="table-actions-nav">
                     <a href="${pageContext.request.contextPath}/pedidosControlador?accion=ingresar" class="btn-table-add">Nuevo Pedido</a>
                     <a href="${pageContext.request.contextPath}/index.jsp" class="btn-table-menu">Ingresar al Menú</a>
                 </div>
             </div>
 
-            <!-- Contenedor con scroll horizontal automático para pantallas de celulares -->
+            
             <div class="responsive-table-holder">
                 <table class="custom-premium-table">
                     <thead>
@@ -70,7 +70,7 @@
                                 <td><span class="brand-tags"><%= pedid.getSelecEstado()%></span></td>
                                 <td>
                                     <div class="action-buttons-group">
-                                        <!-- Enlaces dinámicos corregidos hacia tu Servlet para evitar errores 404 -->
+                                        
                                         <a href="${pageContext.request.contextPath}/pedidosControlador?accion=actualizar&idP=<%= pedid.getIdP()%>" class="btn-action-edit">Editar</a>
                                         <a href="${pageContext.request.contextPath}/pedidosControlador?accion=borrar&idP=<%= pedid.getIdP()%>" class="btn-action-delete" 
                                            onclick="return confirm('¿Estás seguro de eliminar el pedido #<%= pedid.getIdP() %> de la base de datos?')">Eliminar</a>
