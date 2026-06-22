@@ -20,14 +20,14 @@
     <body>
         
         <%
-            // SOLUCIÓN: Recuperamos el objeto individual enviado por tu Servlet mediante el atributo "lista"
+            
             pedidos pedid = (pedidos) request.getAttribute("lista");
             if (pedid == null) {
                 pedid = new pedidos(); // Respaldo de seguridad para evitar errores NullPointerException
             }
         %>
         
-        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <!-- Contenedor Principal -->
         <div class="form-wrapper">
             <div class="form-container edit-mode">
                 
@@ -90,7 +90,7 @@
                             <textarea class="input-registro" id="descriPcion" name="descriPcion" rows="3" required><%= pedid.getDescriPcion() != null ? pedid.getDescriPcion() : "" %></textarea>
                         </div>
                         
-                        <!-- Caja de estado con el name exacto "selecEstado" para eliminar el null definitivo -->
+                        
                        <div class="input-group full-width">
                            <label for="estadoPago">Estado del Pedido / Pago:</label>
                            <!-- SOLUCIÓN: Cambiar name="selecEstado" por name="estadoPago" -->
@@ -99,7 +99,7 @@
                         
                     </div>
                 
-                    <!-- Botones de Acción Estilizados -->
+                    <!-- Boton -->
                     <div class="form-actions">
                         <button type="submit" name="accion" value="Actualizar" class="btn-update">Actualizar Pedido</button>
                         <a href="${pageContext.request.contextPath}/pedidosControlador?accion=listado" class="btn-cancel">Cancelar</a>
