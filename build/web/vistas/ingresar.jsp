@@ -15,49 +15,76 @@
         <!-- vincular css - estilos.css -->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
         
-        <!-- CREACION FORMULARIO POST -->
-        <div class="container">
-            <div class="row">
-            <div class="col-12">
+        <!-- Contenedor Principal -->
+        <div class="form-wrapper">
+            <div class="form-container">
                 
-                <h2><img src="../img/Base de datos.png" alt=""/>INGRESO DE DATOS PERSONALES<img src="../img/Base de datos.png" alt=""/></h2>
-                <p>Por favor ingresa tus dados de información en cada casilla correspondiente,
-                con el propósito de brindarle mayor seguridad y prioridad de tu información personal,
-                con el fin de caracterizar una correcta identificación a tu servicio y producto.</p>
-                
-                <!-- FORMULARIO DE INGRESO DE DATOS -->
-                <form action="${pageContext.request.contextPath}/clientesControlador" method="POST">
-                <label>Nombre:</label>
-                <input class="inut-registro" type="text" name="nombre" placeholder="Ej: juan" required>
-                
-                <label>Apellido:</label>
-                <input class="inut-registro" type="text" name="apellido" placeholder="Ej: Diaz" requited>
-                
-                <label>Cedula:</label>
-                <input class="inut-registro" type="text" name="cedula" placeholder="Ej: 1234567890"required>
-                
-                <label>Celular:</label>
-                <input class="inut-registro" type="text" name="celular" placeholder="Ej: 1234567890" required>
-                
-                <label>Email:</label>
-                <input class="inut-registro" type="email" name="email" placeholder="Ej: juan@gmail.com" required=>
-                
-                <label>Departamento:</label>
-                <input class="inut-registro" type="text" name="departamento" placeholder="Ej: Santander" required>
-                
-                <label>Municipio:</label>
-                <input class="inut-registro" type="text" name="municipio" placeholder="Ej: San Vicente" required>
-                
-                <label>Direccion</label>
-                <input class="inut-registro" type="text" name="direccion" placeholder="Ej: carrera, Barrio o vereda " required>
-                
-                <button type="submit" name="accion" value="Guardar">Guardar Cliente</button>
-                <a href="clientesControlador?accion=listado" class="btn btn-secondary">Cancelar</a>
-                
+                <!-- encavezado del formulario -->
+                <div class="form-header">
+                    <h2>
+                        <img src="${pageContext.request.contextPath}/img/Base de datos.png" alt="Base de datos" class="header-icon">
+                        INGRESO DE DATOS PERSONALES
+                        <img src="${pageContext.request.contextPath}/img/Base de datos.png" alt="Base de datos" class="header-icon">
+                    </h2>
+                    <p>
+                        Por favor ingresa tus datos de información en cada casilla correspondiente,
+                        con el propósito de brindarte mayor seguridad y prioridad de tu información personal,
+                        con el fin de caracterizar una correcta identificación a tu servicio y producto.
+                    </p>
+                </div>
+                    
+                    <!-- FORMULARIO DE INGRESO DE DATOS -->
+                <form action="${pageContext.request.contextPath}/clientesControlador" method="POST" class="custom-form">
+                    
+                    <!-- Grupo del Formulario en Grid de 2 Columnas -->
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="nombre">Nombre:</label>
+                            <input class="input-registro" type="text" id="nombre" name="nombre" placeholder="Ej: Juan" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="apellido">Apellido:</label>
+                            <input class="input-registro" type="text" id="apellido" name="apellido" placeholder="Ej: Díaz" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="cedula">Cédula:</label>
+                            <input class="input-registro" type="text" id="cedula" name="cedula" placeholder="Ej: 1234567890" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="celular">Celular:</label>
+                            <input class="input-registro" type="text" id="celular" name="celular" placeholder="Ej: 3001234567" required>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="email">Correo Electrónico:</label>
+                            <input class="input-registro" type="email" id="email" name="email" placeholder="Ej: juan@gmail.com" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="departamento">Departamento:</label>
+                            <input class="input-registro" type="text" id="departamento" name="departamento" placeholder="Ej: Santander" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="municipio">Municipio:</label>
+                            <input class="input-registro" type="text" id="municipio" name="municipio" placeholder="Ej: San Vicente" required>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="direccion">Dirección Residencial:</label>
+                            <input class="input-registro" type="text" id="direccion" name="direccion" placeholder="Ej: Carrera, Barrio o Vereda" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones de Acción -->
+                    <div class="form-actions">
+                        <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Cliente</button>
+                        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-cancel">Cancelar</a>
+                    </div>
                 </form>
-                 
-                
-            </div>
             </div>
         </div>
     </body>

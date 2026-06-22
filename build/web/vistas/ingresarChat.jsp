@@ -14,61 +14,56 @@
 <!DOCTYPE html>
     
         <title>Ingresar Chat</title>
-<style>
-    /* Contenedor principal */
-    .form-container {
-    max-width: 400px; margin: 50px auto; padding: 30px; background-color: #ffffff; border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-
-    h2 {
-        color: #333; margin-bottom: 25px; font-weight: 600;}
-
-    /* Estilo de las etiquetas (labels) */
-    label {
-        display: block; margin-bottom: 8px; color: #555; font-size: 14px; font-weight: bold; }
-
-    /* Estilo de los inputs de texto y número */
-    input[type="text"], 
-    input[type="number"] {
-        width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
-        /* Evita que el input se salga del contenedor */
-        transition: border-color 0.3s ease; }
-
-    input[type="text"]:focus, 
-    input[type="number"]:focus {
-        outline: none; border-color: #4A90E2;
-    }
-
-    /* Estilo del botón */
-    input[type="submit"] {
-        width: 100%; background-color: #4A90E2; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px;
-        font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
-
-    input[type="submit"]:hover {
-        background-color: #357ABD; }
-</style>
-   
+<!-- Vincular único archivo CSS externo en el Head -->
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
     </head>
     <body>
         
-    <div class="form-container">
-    <h2 style="text-align:center;">Ingreso de Chat</h2>
-
-    <form action="${pageContext.request.contextPath}/chatControlador" method="POST">
-        <label>Nombre Cliente:</label>
-        <input type="text" name="clienteChat" placeholder="Ej. Juan..." required>
-        
-        <label>Mensajeria:</label>
-        <textarea name="Mensajeria" rows="3" placeholder="Preguntas o Sugerencias..."></textarea>
-        
-        <label>Estado Chat:</label>
-        <textarea name="estadoChat" rows="3" placeholder="Leido o por Leer..."></textarea>
-
-        <input type="submit" name="accion" value="Guardar">
-        <a href="chatControlador?accion=listado" class="btn btn-secondary">Cancelar</a>
-        
-    </form>
-          </div>
+        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <div class="form-wrapper">
+            <div class="form-container">
+                
+                <!-- Encabezado del Formulario Corporativo -->
+                <div class="form-header">
+                    <h2>Ingreso de Chat</h2>
+                    <p>
+                        Por favor ingresa los datos de mensajería en cada casilla correspondiente, 
+                        con el propósito de dar seguimiento oportuno a las solicitudes y dudas de tus clientes.
+                    </p>
+                </div>
+                    
+                <!-- FORMULARIO DE INGRESO DE DATOS -->
+                <form action="${pageContext.request.contextPath}/chatControlador" method="POST" class="custom-form">
+                    
+                    <!-- Grupo del Formulario en Grid Dinámico -->
+                    <div class="form-grid">
+                        
+                        <div class="input-group full-width">
+                            <label for="clienteChat">Nombre Cliente:</label>
+                            <input class="input-registro" type="text" id="clienteChat" name="clienteChat" placeholder="Ej: Juan Andrés Silva" required>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="Mensajeria">Mensajería / Consulta:</label>
+                            <textarea class="input-registro" id="Mensajeria" name="Mensajeria" rows="3" placeholder="Preguntas o sugerencias del cliente..." required></textarea>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="estadoChat">Estado Chat:</label>
+                            <input class="input-registro" type="text" id="estadoChat" name="estadoChat" placeholder="Ej: Leído / Pendiente por responder" required>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Botones de Acción Sincronizados con el CSS central -->
+                    <div class="form-actions">
+                        <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Chat</button>
+                        <a href="${pageContext.request.contextPath}/chatControlador?accion=listado" class="btn-cancel">Cancelar</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
         
     </body>
 </html>

@@ -16,38 +16,43 @@ public class detallepagDAO implements detallepagCRUD{
     Connection conexion;
     PreparedStatement ps;
     ResultSet rs;
-    //instanciamiento de funcionario
-    detallepag dpg = new detallepag();
     
 @Override //se trae la interfase CRUD
     public List<detallepag> listardetallepag(){
-        //se trae los registros de la tabla funcionario de la base de datos
-        ArrayList<detallepag>listadetallepag = new ArrayList<>();
+        ArrayList<detallepag> listadetallepag = new ArrayList<>();
         String sql = "SELECT * FROM detallpago";
         try {
             conexion = conectar.getConnection();
             ps = conexion.prepareStatement(sql);
             rs = ps.executeQuery();
-            //permite recorer la infromacion del registro
             while (rs.next()){
-            detallepag detPg = new detallepag();
-            detPg.setIdPago(rs.getInt("idPago"));
-            detPg.setIdCliente(rs.getString("idCliente"));
-            detPg.setIdPedido(rs.getString("idPedido"));
-            detPg.setFechRecb(rs.getString("fechRecb"));
-            detPg.setTcanPago(rs.getString("tcanPago"));
-            detPg.setEstadoPago(rs.getString("estadoPago"));
-            listadetallepag.add(detPg);
+                detallepag detPg = new detallepag();
+                detPg.setIdPago(rs.getInt("idPago"));
+                detPg.setIdCliente(rs.getString("idCliente"));
+                detPg.setIdPedido(rs.getString("idPedido"));
+                detPg.setFechRecb(rs.getString("fechRecb"));
+                detPg.setTcanPago(rs.getString("tcanPago"));
+                detPg.setEstadoPago(rs.getString("estadoPago"));
+                listadetallepag.add(detPg);
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR AL LISTAR: " + e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conexion != null) conexion.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar: " + e);
+            }
         }
-    } catch (SQLException e) {
-        System.err.println("ERROR AL LISTAR: " + e);
-    }
         return listadetallepag;
-}
+    }
+    
     //nuevo metodo para insertar
     @Override
-    public boolean agregar(detallepag dpg){
-        String sql = "INSERT INTO detallpago(idCliente, idPedido, fechRecb, tcanPago, estadoPago)VALUES(?,?,?,?,?)";
+   public boolean agregar(detallepag dpg){
+        String sql = "INSERT INTO detallpago(idCliente, idPedido, fechRecb, tcanPago, estadoPago) VALUES(?,?,?,?,?)";
         try {
             conexion = conectar.getConnection();
             ps = conexion.prepareStatement(sql);
@@ -59,67 +64,105 @@ public class detallepagDAO implements detallepagCRUD{
             
             int resultado = ps.executeUpdate();
             return resultado > 0;
-        }catch (SQLException e) {
-            System.err.println("Error al agregar" +e);
-        return false;
+        } catch (SQLException e) {
+            System.err.println("Error al agregar: " + e);
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conexion != null) conexion.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar: " + e);
+            }
         }   
     }
+   
+   
     @Override
 public detallepag listarundetallepag(int idPago) {
-    String sql = "SELECT * FROM detallpago WHERE idPago= ?";
-    try {
-        conexion = conectar.getConnection();
-        ps = conexion.prepareStatement(sql);
-        ps.setInt(1, idPago);
-        rs = ps.executeQuery();
-        if (rs.next()) {
-            dpg.setIdPago(rs.getInt("idPago"));
-            dpg.setIdCliente(rs.getString("idCliente"));
-            dpg.setIdPedido(rs.getString("idPedido"));
-            dpg.setFechRecb(rs.getString("fechRecb"));
-            dpg.setTcanPago(rs.getString("tcanPago"));
-            dpg.setEstadoPago(rs.getString("estadoPago"));
+        String sql = "SELECT * FROM detallpago WHERE idPago= ?";
+        detallepag dpg = new detallepag();
+        try {
+            conexion = conectar.getConnection();
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idPago);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                dpg.setIdPago(rs.getInt("idPago"));
+                dpg.setIdCliente(rs.getString("idCliente"));
+                dpg.setIdPedido(rs.getString("idPedido"));
+                dpg.setFechRecb(rs.getString("fechRecb"));
+                dpg.setTcanPago(rs.getString("tcanPago"));
+                dpg.setEstadoPago(rs.getString("estadoPago"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al Buscar por idPago: " + e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conexion != null) conexion.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar: " + e);
+            }
         }
+        return dpg;
     }
-    catch (SQLException e) {
-        System.err.println("Error al Buscar por idPago: " +e);
-    }
-    return dpg;
-}
+
 @Override
 public boolean actualizar(detallepag dpg) {
-    String sql = "UPDATE producto SET Cantidad=?, Marca=?, Talla=?, Descripcion=?, precio=? WHERE idproducto=?";
-    try {
-        conexion = conectar.getConnection();
-        ps = conexion.prepareStatement(sql);
-        ps.setString(1, dpg.getIdCliente());
-        ps.setString(2, dpg.getIdPedido());
-        ps.setString(3, dpg.getFechRecb());
-        ps.setString(4, dpg.getTcanPago());
-        ps.setString(5, dpg.getEstadoPago());
-        ps.executeUpdate();
-            return true;
-    } catch (SQLException e) {
-        System.err.println("Error al Actualizar: " +e);
-    return false;
-    }  
-}
+        // SOLUCIÓN 1 y 2: Nombre de tabla 'detallpago' y columnas de pago reales corregidas
+        String sql = "UPDATE detallpago SET idCliente=?, idPedido=?, fechRecb=?, tcanPago=?, estadoPago=? WHERE idPago=?";
+        try {
+            conexion = conectar.getConnection();
+            ps = conexion.prepareStatement(sql);
+            
+            // Inyección de parámetros respetando tu objeto dpg
+            ps.setString(1, dpg.getIdCliente());
+            ps.setString(2, dpg.getIdPedido());
+            ps.setString(3, dpg.getFechRecb());
+            ps.setString(4, dpg.getTcanPago());
+            ps.setString(5, dpg.getEstadoPago());
+            
+            // SOLUCIÓN 3: Agregamos el parámetro obligatorio número 6 para el WHERE
+            ps.setInt(6, dpg.getIdPago());
+            
+            int resultado = ps.executeUpdate();
+            return resultado > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al Actualizar en detallepagDAO: " + e);
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conexion != null) conexion.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e);
+            }
+        }
+    }
+
 
 @Override
 public boolean borrar(int idPago) {
-    String sql = "DELETE FROM detallpago WHERE idPago = idPago";
-    try {
-        conexion = conectar.getConnection();
-        ps = conexion.prepareStatement(sql);
-        //Asigna el id "idProducto" en parametro 
-        ps.setInt(1, idPago);
-        // ejecuta la actualizacion
-        ps.executeUpdate();
-        
-        return true;
+        String sql = "DELETE FROM detallpago WHERE idPago = ?";
+        try {
+            conexion = conectar.getConnection();
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idPago);
+            int resultado = ps.executeUpdate();
+            
+            return resultado > 0;
         } catch (SQLException e) {
-        System.err.println("Error al Borrar: " +e);
-        return false;
-        } 
+            System.err.println("Error al Borrar: " + e);
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conexion != null) conexion.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e);
+            }
+        }
     }
 }

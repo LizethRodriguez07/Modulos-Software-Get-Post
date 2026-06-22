@@ -14,58 +14,65 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Listado de Productos</title>
-    <!-- CSS básico para que la tabla se vea bien -->
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #4CAF50; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        .btn { padding: 8px 12px; text-decoration: none; border-radius: 4px; color: white; }
-        .btn-edit { background-color: #2196F3; }
-        .btn-delete { background-color: #f44336; }
-        .btn-add { background-color: #4CAF50; margin-bottom: 10px; display: inline-block; }
-    </style>
+    <!-- Vincular tu archivo CSS externo unificado -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
 </head>
 <body>
 
-    <h1>Gestión de Productos</h1>
-    
-    <!-- Botón para ir al formulario de agregar -->
-    <a href="chatControlador?accion=ingresar" class="btn btn-add">Nuevo Producto</a>
-    <a href="${pageContext.request.contextPath}/plantillaMenu/menu.jsp" class="btn btn-edit">Ingresar al Menu</a>
+    <!-- Contenedor general oscuro que unifica la estética del sistema -->
+    <div class="table-wrapper">
+        <div class="table-container">
+            
+            <!-- Encabezado de la Sección de Gestión de Chats -->
+            <div class="table-header-section">
+                <h2>Gestión de Chats y Mensajería</h2>
+                
+                <!-- Grupo de botones de navegación superior corregidos con el contextPath del servidor -->
+                <div class="table-actions-nav">
+                    <a href="${pageContext.request.contextPath}/chatControlador?accion=ingresar" class="btn-table-add">Nuevo Registro</a>
+                    <a href="${pageContext.request.contextPath}/index.jsp" class="btn-table-menu">Ingresar al Menú</a>
+                </div>
+            </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre Cliente</th>
-                <th>Mensajeria</th>
-                <th>Estado Chat</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-                chatDAO chaDAO = new chatDAO();
-                List<chat> lista = chaDAO.listarchat();
-                for (chat cht : lista) {
-                    %>
-                <tr>
-                    <td><%= cht.getIdChat()%></td>
-                    <td><%= cht.getClienteChat()%></td>
-                    <td><%= cht.getMensajeria()%></td>
-                    <td><%= cht.getEstadoChat()%></td>
-                    
-                    <td>
-                        <!-- Enlaces que llaman al Servlet pasandole la acción y el ID -->
-                        <a href="chatControlador?accion=actualizar&idChat=<%= cht.getIdChat()%>" class="btn btn-edit">Editar</a>
-                        <a href="chatControlador?accion=borrar&idChat=<%= cht.getIdChat()%>" class="btn btn-delete" 
-                           onclick="return confirm('¿Estás seguro de eliminar este cliente?')">Eliminar</a>
-                    </td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-    </body>
+            <!-- Contenedor con scroll horizontal automático para pantallas de celulares -->
+            <div class="responsive-table-holder">
+                <table class="custom-premium-table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre Cliente</th>
+                            <th>Mensajería</th>
+                            <th>Estado Chat</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            chatDAO chaDAO = new chatDAO();
+                            List<chat> lista = chaDAO.listarchat();
+                            for (chat cht : lista) {
+                        %>
+                            <tr>
+                                <td><strong><%= cht.getIdChat()%></strong></td>
+                                <td><%= cht.getClienteChat()%></td>
+                                <td><%= cht.getMensajeria()%></td>
+                                <td><span class="brand-tags"><%= cht.getEstadoChat()%></span></td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <!-- Enlaces dinámicos corregidos hacia el Servlet utilizando rutas absolutas seguras -->
+                                        <a href="${pageContext.request.contextPath}/chatControlador?accion=actualizar&idChat=<%= cht.getIdChat()%>" class="btn-action-edit">Editar</a>
+                                        <a href="${pageContext.request.contextPath}/chatControlador?accion=borrar&idChat=<%= cht.getIdChat()%>" class="btn-action-delete" 
+                                           onclick="return confirm('¿Estás seguro de eliminar el registro de chat #<%= cht.getIdChat() %> de la base de datos?')">Eliminar</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
 </html>

@@ -9,21 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.annotation.WebServlet;
 
+@WebServlet(name = "detallepagControlador", urlPatterns = {"/detallepagControlador"})
 public class detallepagControlador extends HttpServlet {
+    
     String listar = "vistas/listarDpg.jsp";
-   detallepag detPg = new detallepag();
-   detallepagDAO dpagoDAO = new detallepagDAO();
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // Mantenemos tus variables globales exactamente iguales
+    detallepag detPg = new detallepag();
+    detallepagDAO dpagoDAO = new detallepagDAO();
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -58,28 +52,29 @@ public class detallepagControlador extends HttpServlet {
         String acceso;
         String accion = request.getParameter("accion");
        
-        if (accion ==null) accion = "listado";
+        if (accion == null) accion = "listado";
     
-    switch(accion){
-        case "listado" -> acceso = "vistas/listarDpg.jsp";
-        case "ingresar" -> acceso = "vistas/ingresarDpg.jsp";
-        case "actualizar" -> {
-        int idPago = Integer.parseInt(request.getParameter("idPago"));
-            
-            detallepag dpg = dpagoDAO.listarundetallepag(idPago);
-            request.setAttribute("lista", dpg); //cambie
-            acceso = "vistas/actualizarDpg.jsp";
+        switch(accion){
+            case "listado" -> acceso = "vistas/listarDpg.jsp";
+            case "ingresar" -> acceso = "vistas/ingresarDpg.jsp";
+            case "actualizar" -> {
+                int idPago = Integer.parseInt(request.getParameter("idPago"));
+                
+                detPg = dpagoDAO.listarundetallepag(idPago);
+                request.setAttribute("lista", detPg); 
+                acceso = "vistas/actualizarDpg.jsp";
+            }
+            case "borrar" -> {
+                int idPago = Integer.parseInt(request.getParameter("idPago"));
+                dpagoDAO.borrar(idPago);
+                acceso = listar; 
+            }
+            default -> acceso = listar; 
         }
-        case "borrar" -> {
-            int idPago = Integer.parseInt(request.getParameter("idPago"));
-            dpagoDAO.borrar(idPago);
-            acceso = listar;
-        }
-        default -> acceso = listar;
+        RequestDispatcher cargarvistas = request.getRequestDispatcher(acceso);
+        cargarvistas.forward(request, response);
     }
-    RequestDispatcher cargarvistas = request.getRequestDispatcher(acceso);
-    cargarvistas.forward(request, response);
-    }
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -93,58 +88,69 @@ public class detallepagControlador extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
         String accion = request.getParameter("accion");    
     
-    switch (accion) {
-        case "Guardar" -> {
-            String idCliente = request.getParameter("idCliente");
-            String idPedido = request.getParameter("idPedido");
-            String fechRecb = request.getParameter("fechRecb");
-            String tcanPago = request.getParameter("tcanPago");
-            String estadoPago = request.getParameter("estadoPago");
-            
-            detPg.setIdCliente(idCliente);
-            detPg.setIdPedido(idPedido);
-            detPg.setFechRecb(fechRecb);
-            detPg.setTcanPago(tcanPago);
-            detPg.setEstadoPago(estadoPago);
-            
-            
-            //Metodo DAO para que guarde
-            dpagoDAO.agregar(detPg);
-            //redireccion por response
-            response.sendRedirect("detallepagControlador?accion=listado");
+        switch (accion) {
+            case "Guardar" -> {
+                String idCliente = request.getParameter("idCliente");
+                String idPedido = request.getParameter("idPedido");
+                String fechRecb = request.getParameter("fechRecb");
+                String tcanPago = request.getParameter("tcanPago");
+                String estadoPago = request.getParameter("estadoPago");
+                
+                // MEJORA: Remueve la "T" del calendario datetime-local y estandariza para la BD DATETIME
+                if (fechRecb != null && fechRecb.contains("T")) {
+                    fechRecb = fechRecb.replace("T", " ");
+                    if (fechRecb.length() == 16) { 
+                        fechRecb += ":00"; 
+                    }
+                }
+                
+                detPg = new detallepag();
+                detPg.setIdCliente(idCliente);
+                detPg.setIdPedido(idPedido);
+                detPg.setFechRecb(fechRecb);
+                detPg.setTcanPago(tcanPago);
+                detPg.setEstadoPago(estadoPago);
+                
+                dpagoDAO.agregar(detPg);
+                
+                response.sendRedirect(request.getContextPath() + "/detallepagControlador?accion=listado");
             }
         
-        case "Actualizar" -> {
-            String idCliente = request.getParameter("idCliente");
-            String idPedido = request.getParameter("idPedido");
-            String fechRecb = request.getParameter("fechRecb");
-            String tcanPago = request.getParameter("tcanPago");
-            String estadoPago = request.getParameter("estadoPago");
-            
-            detPg.setIdCliente(idCliente);
-            detPg.setIdPedido(idPedido);
-            detPg.setFechRecb(fechRecb);
-            detPg.setTcanPago(tcanPago);
-            detPg.setEstadoPago(estadoPago);
-            
-            //Metodo DAO para que guarde
-            dpagoDAO.actualizar(detPg);
-            //redireccion por response
-            response.sendRedirect("detallepagControlador?accion=listado");
+            case "Actualizar" -> {
+                int idPago = Integer.parseInt(request.getParameter("idPago"));
+                String idCliente = request.getParameter("idCliente");
+                String idPedido = request.getParameter("idPedido");
+                String fechRecb = request.getParameter("fechRecb");
+                String tcanPago = request.getParameter("tcanPago");
+                String estadoPago = request.getParameter("estadoPago");
+                
+                // MEJORA: Remueve la "T" del calendario datetime-local en la actualización
+                if (fechRecb != null && fechRecb.contains("T")) {
+                    fechRecb = fechRecb.replace("T", " ");
+                    if (fechRecb.length() == 16) {
+                        fechRecb += ":00";
+                    }
+                }
+                
+                detPg.setIdPago(idPago); 
+                detPg.setIdCliente(idCliente);
+                detPg.setIdPedido(idPedido);
+                detPg.setFechRecb(fechRecb);
+                detPg.setTcanPago(tcanPago);
+                detPg.setEstadoPago(estadoPago);
+                
+                dpagoDAO.actualizar(detPg);
+                
+                response.sendRedirect(request.getContextPath() + "/detallepagControlador?accion=listado");
+            }
         }
     }
-}
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Controlador para la gestión de Detalle de Pago";
+    }
 }

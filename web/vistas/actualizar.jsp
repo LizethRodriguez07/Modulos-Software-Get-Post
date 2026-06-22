@@ -4,67 +4,100 @@
     Author     : H-P
 --%>
 
-<%@page import="java.util.List"%>
 <%@page import="ModelosDAO.clientesDAO"%>
 <%@page import="Modelos.clientes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Actualizar Cliente</title>
-        
-        <!-- vincular css - estilos.css -->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
-        
-    </head>
-    <body class="container mt-5">
-        
-        <div class="container">
-            <div class="row">
-            <div class="col-12">
-        <%
-                clientesDAO clientDAO = new clientesDAO();
-                List<clientes> lista = clientDAO.listarcliente();
-                for (clientes c : lista) {
-                    %>
-        
-        <!-- FORMULARIO DE INGRESO DE DATOS -->
-        <h4 class="mb-0">Editar Cliente: <%= c.getNombre() %></h4>
-        <form action="${pageContext.request.contextPath}/clientesControlador" method="POST">
-                <label>Nombre:</label>
-                <input class="inut-registro" type="text" name="nombre" value="<%= c.getNombre() %>" readonly>
-                
-                
-                <label>Apellido:</label>
-                <input class="inut-registro" type="text" name="apellido" value="<%= c.getApellido() %>">
-                
-                <label>Cedula:</label>
-                <input class="inut-registro" type="text" name="cedula" value="<%= c.getCedula() %>">
-                
-                <label>Celular:</label>
-                <input class="inut-registro" type="text" name="celular" value="<%= c.getCelular() %>">
-                
-                <label>Email:</label>
-                <input class="inut-registro" type="email" name="email" value="<%= c.getEmail() %>">
-                
-                <label>Departamento:</label>
-                <input class="inut-registro" type="text" name="departamento" value="<%= c.getDepartamento() %>">
-                
-                <label>Municipio:</label>
-                <input class="inut-registro" type="text" name="municipio" value="<%= c.getMunicipio() %>">
-                
-                <label>Direccion</label>
-                <input class="inut-registro" type="text" name="direccion" value="<%= c.getDireccion() %>">
-                
-                <button type="submit" name="accion" values="Actualizar">Actualizar</button>
-        <% } %>
-        </form>
-                
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Actualizar Cliente</title>
+    <!-- vincular css - estilos.css -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
+</head>
+<body>
+    <!-- Contenedor Principal con Fondo Oscuro Premium -->
+    <div class="form-wrapper">
+        <div class="form-container edit-mode">
+            
+            <%
+                // CORRECCIÓN: Se elimina el bucle FOR y se captura el objeto único enviado desde el Controlador
+                clientes c = (clientes) request.getAttribute("cliente");
+                if (c == null) {
+                    c = new clientes(); // Evita errores de puntero nulo en la página si se accede directamente
+                }
+            %>
+            
+            <!-- Encabezado del Formulario Dinámico -->
+            <div class="form-header">
+                <h2>
+                    EDITAR CLIENTE: <%= c.getNombre() != null ? c.getNombre() : "" %> <%= c.getApellido() != null ? c.getApellido() : "" %>
+                </h2>
+                <p>
+                    Modifique la información residencial o de contacto del cliente en las casillas correspondientes.
+                </p>
             </div>
+            
+            <!-- FORMULARIO DE INGRESO DE DATOS -->
+            <form action="${pageContext.request.contextPath}/clientesControlador" method="POST" class="custom-form">
+                
+                <!-- Grupo del Formulario en Grid de 2 Columnas -->
+                <div class="form-grid">
+                    
+                    <div class="input-group">
+                        <label for="nombre">Nombre (Lectura):</label>
+                        <!-- Se mantiene readonly ya que tu SQL actualiza mediante WHERE nombre=? -->
+                        <input class="input-registro" type="text" id="nombre" name="nombre" value="<%= c.getNombre() != null ? c.getNombre() : "" %>" readonly>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="apellido">Apellido:</label>
+                        <input class="input-registro" type="text" id="apellido" name="apellido" value="<%= c.getApellido() != null ? c.getApellido() : "" %>" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cedula">Cédula:</label>
+                        <input class="input-registro" type="text" id="cedula" name="cedula" value="<%= c.getCedula() != null ? c.getCedula() : "" %>" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="celular">Celular:</label>
+                        <input class="input-registro" type="text" id="celular" name="celular" value="<%= c.getCelular() != null ? c.getCelular() : "" %>" required>
+                    </div>
+                    
+                    <div class="input-group full-width">
+                        <label for="email">Correo Electrónico:</label>
+                        <input class="input-registro" type="email" id="email" name="email" value="<%= c.getEmail() != null ? c.getEmail() : "" %>" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="departamento">Departamento:</label>
+                        <input class="input-registro" type="text" id="departamento" name="departamento" value="<%= c.getDepartamento() != null ? c.getDepartamento() : "" %>" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="municipio">Municipio:</label>
+                        <input class="input-registro" type="text" id="municipio" name="municipio" value="<%= c.getMunicipio() != null ? c.getMunicipio() : "" %>" required>
+                    </div>
+                    
+                    <div class="input-group full-width">
+                        <label for="direccion">Dirección Residencial:</label>
+                        <input class="input-registro" type="text" id="direccion" name="direccion" value="<%= c.getDireccion() != null ? c.getDireccion() : "" %>" required>
+                    </div>
+                    
+                </div>
+                
+                <!-- Botones de Acción Estilizados -->
+                <div class="form-actions">
+                    <button type="submit" name="accion" value="Actualizar" class="btn-update">Actualizar Cliente</button>
+                    <!-- CORRECCIÓN: Se cambia el enlace directo al jsp por la acción del servlet para recargar la tabla correctamente -->
+                    <a href="${pageContext.request.contextPath}/clientesControlador?accion=listado" class="btn-cancel">Cancelar</a>
+                </div>
+                
+            </form>
+            
         </div>
     </div>
-                            
-       </body>
+</body>
 </html>

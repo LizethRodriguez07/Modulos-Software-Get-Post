@@ -5,76 +5,71 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
-<!-- vincular css - estilos.css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
-
 <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Producto en Inventario</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
+</head>
+<body>
     
-        <title>Ingresar Productos</title>
-<style>
-    /* Contenedor principal */
-    .form-container {
-    max-width: 400px; margin: 50px auto; padding: 30px; background-color: #ffffff; border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    <div class="form-wrapper">
+        <div class="form-container">
+            
+            <div class="form-header">
+                <h2>Actualización de Pedidos e Inventario</h2>
+                <p>Ingrese los nuevos lotes de calzado disponibles para habilitar la selección a los clientes en el catálogo público.</p>
+            </div>
 
-    h2 {
-        color: #333; margin-bottom: 25px; font-weight: 600;}
+            <form action="${pageContext.request.contextPath}/productoControlador" method="POST" class="custom-form">
+                
+                <div class="form-grid">
+                    <div class="input-group">
+                         <label for="Cantidad">Cantidad en Stock:</label>
+                         <input class="input-registro" type="number" id="Cantidad" name="Cantidad" placeholder="Ej: 50" min="1" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="Marca">Marca de Calzado:</label>
+                        <!-- MEJORA: Lista desplegable para unificar los nombres en la base de datos -->
+                        <select class="input-registro" id="Marca" name="Marca" style="width: 100%; height: 44px; background-color: #34495e; color: white; border: 1px solid #4f5d73; border-radius: 4px; padding: 0 10px;" required>
+                            <option value="" disabled selected>Seleccione la marca...</option>
+                            <option value="NIKE">NIKE</option>
+                            <option value="ADIDAS">ADIDAS</option>
+                            <option value="PUMA">PUMA</option>
+                            <option value="NEW BALANCE">NEW BALANCE</option>
+                            <option value="REEBOK">REEBOK</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="Talla">Talla (Nacional):</label>
+                        <!-- MEJORA: Atributos min y max basados en tallas reales de calzado -->
+                        <input class="input-registro" type="number" id="Talla" name="Talla" placeholder="Ej: 39" min="34" max="45" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="precio">Precio al Público ($):</label>
+                        <input class="input-registro" type="number" id="precio" name="precio" placeholder="Ej: 240000" min="0" required>
+                    </div>
+                    
+                    <div class="input-group full-width">
+                        <label for="Descripcion">Detalles y Modelo del Calzado:</label>
+                        <textarea class="input-registro" id="Descripcion" name="Descripcion" rows="3" placeholder="Modelo exacto (ej: Air Max 270), color, materiales o tipo de suela..." required></textarea>
+                    </div>
+                </div>
 
-    /* Estilo de las etiquetas (labels) */
-    label {
-        display: block; margin-bottom: 8px; color: #555; font-size: 14px; font-weight: bold; }
-
-    /* Estilo de los inputs de texto y número */
-    input[type="text"], 
-    input[type="number"] {
-        width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
-        /* Evita que el input se salga del contenedor */
-        transition: border-color 0.3s ease; }
-
-    input[type="text"]:focus, 
-    input[type="number"]:focus {
-        outline: none; border-color: #4A90E2;
-    }
-
-    /* Estilo del botón */
-    input[type="submit"] {
-        width: 100%; background-color: #4A90E2; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px;
-        font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
-
-    input[type="submit"]:hover {
-        background-color: #357ABD; }
-</style>
-   
-    </head>
-    <body>
-        
-    <div class="form-container">
-    <h2 style="text-align:center;">Ingreso de Productos</h2>
-
-    <form action="${pageContext.request.contextPath}/productoControlador" method="POST">
-        <label>Cantidad:</label>
-        <input type="number" name="Cantidad" placeholder="1" min="1" required>
-        
-        <label>Marca:</label>
-        <input type="text" name="Marca" placeholder="Ej. TENIS AIR MAX 270" required>
-        
-        <label>Talla:</label>
-        <input type="text" name="Talla" placeholder="Ej. 37 a la 42" required>
-        
-        <label>Descripción</label>
-        <textarea name="Descripcion" rows="3" placeholder="Detalles del producto..."></textarea>
-
-        <label>Precio:</label>
-        <input type="number" name="precio" placeholder="0.00" step="0.01" required>
-
-        <input type="submit" name="accion" value="Guardar">
-        <a href="productoControlador?accion=listado" class="btn btn-secondary">Cancelar</a>
-        
-    </form>
-          </div>
-        
-    </body>
+                <div class="form-actions">
+                    <button type="submit" name="accion" value="Guardar" class="btn-submit">Publicar en Catálogo</button>
+                    <a href="${pageContext.request.contextPath}/productoControlador?accion=listado" class="btn-cancel">Ver Listado</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    
+</body>
 </html>
+

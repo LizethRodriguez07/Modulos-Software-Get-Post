@@ -9,11 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.annotation.WebServlet;
 
+@WebServlet(name = "pedidosControlador", urlPatterns = {"/pedidosControlador"})
 public class pedidosControlador extends HttpServlet {
 String listar = "vistas/listarPedidos.jsp";
-   pedidos pedd = new pedidos();
-   pedidosDAO pedDAO = new pedidosDAO();
+    pedidos pedd = new pedidos();
+    pedidosDAO pedDAO = new pedidosDAO();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,27 +59,26 @@ String listar = "vistas/listarPedidos.jsp";
         String acceso;
         String accion = request.getParameter("accion");
        
-        if (accion ==null) accion = "listado";
+        if (accion == null) accion = "listado";
     
-    switch(accion){
-        case "listado" -> acceso = "vistas/listarPedidos.jsp";
-        case "ingresar" -> acceso = "vistas/ingresarPedidos.jsp";
-        case "actualizar" -> {
-        int idP = Integer.parseInt(request.getParameter("idP"));
-            
-            pedidos pedid = pedDAO.listarunpedidos(idP);
-            request.setAttribute("lista", pedid); //cambie
-            acceso = "vistas/actualizarPedidos.jsp";
+        switch(accion){
+            case "listado" -> acceso = "vistas/listarPedidos.jsp";
+            case "ingresar" -> acceso = "vistas/ingresarPedidos.jsp";
+            case "actualizar" -> {
+                int idP = Integer.parseInt(request.getParameter("idP"));
+                pedidos pedid = pedDAO.listarunpedidos(idP);
+                request.setAttribute("lista", pedid); 
+                acceso = "vistas/actualizarPedidos.jsp";
+            }
+            case "borrar" -> {
+                int idP = Integer.parseInt(request.getParameter("idP"));
+                pedDAO.borrar(idP);
+                acceso = "pedidosControlador?accion=listado"; // Redirección interna segura
+            }
+            default -> acceso = "pedidosControlador?accion=listado";
         }
-        case "borrar" -> {
-            int idP = Integer.parseInt(request.getParameter("idP"));
-            pedDAO.borrar(idP);
-            acceso = listar;
-        }
-        default -> acceso = listar;
-    }
-    RequestDispatcher cargarvistas = request.getRequestDispatcher(acceso);
-    cargarvistas.forward(request, response);
+        RequestDispatcher cargarvistas = request.getRequestDispatcher(acceso);
+        cargarvistas.forward(request, response);
     }
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -91,60 +92,64 @@ String listar = "vistas/listarPedidos.jsp";
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8"); // Evita que se dañen las eñes y tildes al guardar
         String accion = request.getParameter("accion");    
     
-    switch (accion) {
-        case "Guardar" -> {
-            String fechaPedido = request.getParameter("fechaPedido");
-            String nomCliente = request.getParameter("nomCliente");
-            String totalPg = request.getParameter("totalPg");
-            String medioPago = request.getParameter("medioPago");
-            String descriPcion = request.getParameter("descriPcion");
-            String teleFono = request.getParameter("teleFono");
-            String direCcion = request.getParameter("direCcion");
-            String selecEstado = request.getParameter("selecEstado");
-            
-            pedd.setFechaPedido(fechaPedido);
-            pedd.setNomCliente(nomCliente);
-            pedd.setTotalPg(totalPg);
-            pedd.setMedioPago(medioPago);
-            pedd.setDescriPcion(descriPcion);
-            pedd.setTeleFono(teleFono);
-            pedd.setDireCcion(direCcion);
-            pedd.setSelecEstado(selecEstado);
-            
-            //Metodo DAO para que guarde
-            pedDAO.agregar(pedd);
-            //redireccion por response
-            response.sendRedirect("pedidosControlador?accion=listado");
+        switch (accion) {
+            case "Guardar" -> {
+                String fechaPedido = request.getParameter("fechaPedido");
+                String nomCliente = request.getParameter("nomCliente");
+                String totalPg = request.getParameter("totalPg");
+                String medioPago = request.getParameter("medioPago");
+                String descriPcion = request.getParameter("descriPcion");
+                String teleFono = request.getParameter("teleFono");
+                String direCcion = request.getParameter("direCcion");
+                
+                // SOLUCIÓN 3: Captura el parámetro correcto según el name="estadoPago" del JSP
+                String selecEstado = request.getParameter("estadoPago");
+                
+                pedd.setFechaPedido(fechaPedido);
+                pedd.setNomCliente(nomCliente);
+                pedd.setTotalPg(totalPg);
+                pedd.setMedioPago(medioPago);
+                pedd.setDescriPcion(descriPcion);
+                pedd.setTeleFono(teleFono);
+                pedd.setDireCcion(direCcion);
+                pedd.setSelecEstado(selecEstado);
+                
+                pedDAO.agregar(pedd);
+                response.sendRedirect("pedidosControlador?accion=listado");
             }
         
-        case "Actualizar" -> {
-            String fechaPedido = request.getParameter("fechaPedido");
-            String nomCliente = request.getParameter("nomCliente");
-            String totalPg = request.getParameter("totalPg");
-            String medioPago = request.getParameter("medioPago");
-            String descriPcion = request.getParameter("descriPcion");
-            String teleFono = request.getParameter("teleFono");
-            String direCcion = request.getParameter("direCcion");
-            String selecEstado = request.getParameter("selecEstado");
-            
-            pedd.setFechaPedido(fechaPedido);
-            pedd.setNomCliente(nomCliente);
-            pedd.setTotalPg(totalPg);
-            pedd.setMedioPago(medioPago);
-            pedd.setDescriPcion(descriPcion);
-            pedd.setTeleFono(teleFono);
-            pedd.setDireCcion(direCcion);
-            pedd.setSelecEstado(selecEstado);
-            
-            //Metodo DAO para que guarde
-            pedDAO.actualizar(pedd);
-            //redireccion por response
-            response.sendRedirect("pedidosControlador?accion=listado");
+            case "Actualizar" -> {
+    int idP = Integer.parseInt(request.getParameter("idP"));
+    String fechaPedido = request.getParameter("fechaPedido");
+    String nomCliente = request.getParameter("nomCliente");
+    String totalPg = request.getParameter("totalPg");
+    String medioPago = request.getParameter("medioPago");
+    String descriPcion = request.getParameter("descriPcion");
+    String teleFono = request.getParameter("teleFono");
+    String direCcion = request.getParameter("direCcion");
+    
+    // SOLUCIÓN: Cambiar request.getParameter("selecEstado") por "estadoPago"
+    String selecEstado = request.getParameter("estadoPago");
+    
+    pedd.setIdP(idP);
+    pedd.setFechaPedido(fechaPedido);
+    pedd.setNomCliente(nomCliente);
+    pedd.setTotalPg(totalPg);
+    pedd.setMedioPago(medioPago);
+    pedd.setDescriPcion(descriPcion);
+    pedd.setTeleFono(teleFono);
+    pedd.setDireCcion(direCcion);
+    pedd.setSelecEstado(selecEstado); // Se lo pasamos al objeto pedd
+    
+    pedDAO.actualizar(pedd);
+    response.sendRedirect("pedidosControlador?accion=listado");
+
+            }
         }
     }
-}
 
     /**
      * Returns a short description of the servlet.
@@ -153,7 +158,6 @@ String listar = "vistas/listarPedidos.jsp";
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Controlador de Pedidos Corporativo - STORE DANY";
+    }
 }

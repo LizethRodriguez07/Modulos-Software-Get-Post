@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet(name = "clientesControlador", urlPatterns = {"/clientesControlador"})
 public class clientesControlador extends HttpServlet {
+    
    String listar = "vistas/listar.jsp";
    clientes clit = new clientes();
    clientesDAO clientDAO = new clientesDAO();
@@ -64,26 +65,26 @@ public class clientesControlador extends HttpServlet {
         String acceso;
         String accion = request.getParameter("accion");
     
-        if (accion ==null) accion = "listado";
+        if (accion == null) accion = "listado";
         
-    switch(accion){
-        case "listado"-> acceso = "vistas/listar.jsp";
-        case "ingresar" -> acceso = "vistas/ingresar.jsp";
-        case "actualizar" -> {
-            String nombre = request.getParameter("nombre");
-            clientes c = clientDAO.listaruncliente(nombre);
-            request.setAttribute("lista", c); //cambie
-            acceso = "vistas/actualizar.jsp";
+        switch(accion){
+            case "listado" -> acceso = "vistas/listar.jsp";
+            case "ingresar" -> acceso = "vistas/ingresar.jsp";
+            case "actualizar" -> {
+                String nombre = request.getParameter("nombre");
+                clientes c = clientDAO.listaruncliente(nombre);
+                request.setAttribute("cliente", c); 
+                acceso = "vistas/actualizar.jsp";
+            }
+            case "borrar" -> {
+                String nombre = request.getParameter("nombre");
+                clientDAO.borrar(nombre);
+                acceso = listar;
+            }
+            default -> acceso = listar;
         }
-        case "borrar" -> {
-            String nombre = request.getParameter("nombre");
-            clientDAO.borrar(nombre);
-            acceso = listar;
-        }
-        default -> acceso = listar;
-    }
-    RequestDispatcher cargarvistas = request.getRequestDispatcher(acceso);
-    cargarvistas.forward(request, response);
+        RequestDispatcher cargarvistas = request.getRequestDispatcher(acceso);
+        cargarvistas.forward(request, response);
     }
 
     /**
@@ -99,67 +100,60 @@ public class clientesControlador extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
         String accion = request.getParameter("accion");    
  
-    switch (accion) {
-        case "Guardar" -> {
-            String nombre = request.getParameter("nombre");
-            String apellido = request.getParameter("apellido");
-            String cedula = request.getParameter("cedula");
-            String celular = request.getParameter("celular");
-            String email = request.getParameter("email");
-            String departamento = request.getParameter("departamento");
-            String municipio = request.getParameter("municipio");
-            String direccion = request.getParameter("direccion");
-            clit.setNombre(nombre);
-            clit.setApellido(apellido);
-            clit.setCedula(cedula);
-            clit.setCelular(celular);
-            clit.setEmail(email);
-            clit.setDepartamento(departamento);
-            clit.setMunicipio(municipio);
-            clit.setDireccion(direccion);
-            
-            //Metodo DAO para que guarde
-            clientDAO.agregar(clit);
-            //redireccion por response
-            response.sendRedirect("clientesControlador?accion=listado");
+        switch (accion) {
+            case "Guardar" -> {
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String cedula = request.getParameter("cedula");
+                String celular = request.getParameter("celular");
+                String email = request.getParameter("email");
+                String departamento = request.getParameter("departamento");
+                String municipio = request.getParameter("municipio");
+                String direccion = request.getParameter("direccion");
+                
+                clit.setNombre(nombre);
+                clit.setApellido(apellido);
+                clit.setCedula(cedula);
+                clit.setCelular(celular);
+                clit.setEmail(email);
+                clit.setDepartamento(departamento);
+                clit.setMunicipio(municipio);
+                clit.setDireccion(direccion);
+                
+                clientDAO.agregar(clit);
+                response.sendRedirect("clientesControlador?accion=listado");
             }
-        
-        case "Actualizar" -> {
-            String nombre = request.getParameter("nombre");
-            String apellido = request.getParameter("apellido");
-            String cedula = request.getParameter("cedula");
-            String celular = request.getParameter("celular");
-            String email = request.getParameter("email");
-            String departamento = request.getParameter("departamento");
-            String municipio = request.getParameter("municipio");
-            String direccion = request.getParameter("direccion");
-            clit.setNombre(nombre);
-            clit.setApellido(apellido);
-            clit.setCedula(cedula);
-            clit.setCelular(celular);
-            clit.setEmail(email);
-            clit.setDepartamento(departamento);
-            clit.setMunicipio(municipio);
-            clit.setDireccion(direccion);
             
-            //Metodo DAO para que guarde
-            clientDAO.actualizar(clit);
-            //redireccion por response
-            response.sendRedirect("clientesControlador?accion=listado");
+            case "Actualizar" -> {
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String cedula = request.getParameter("cedula");
+                String celular = request.getParameter("celular");
+                String email = request.getParameter("email");
+                String departamento = request.getParameter("departamento");
+                String municipio = request.getParameter("municipio");
+                String direccion = request.getParameter("direccion");
+                
+                clit.setNombre(nombre);
+                clit.setApellido(apellido);
+                clit.setCedula(cedula);
+                clit.setCelular(celular);
+                clit.setEmail(email);
+                clit.setDepartamento(departamento);
+                clit.setMunicipio(municipio);
+                clit.setDireccion(direccion);
+                
+                clientDAO.actualizar(clit);
+                response.sendRedirect("clientesControlador?accion=listado");
+            }
         }
     }
-}
     
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Controlador para la gestión de ingreso de Clientes";
+    }
 }

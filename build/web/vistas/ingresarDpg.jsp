@@ -16,66 +16,66 @@
     <head>
     
         <title>Ingresar Detalles de Pagos</title>
-<style>
-    /* Contenedor principal */
-    .form-container {
-    max-width: 400px; margin: 50px auto; padding: 30px; background-color: #ffffff; border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-
-    h2 {
-        color: #333; margin-bottom: 25px; font-weight: 600;}
-
-    /* Estilo de las etiquetas (labels) */
-    label {
-        display: block; margin-bottom: 8px; color: #555; font-size: 14px; font-weight: bold; }
-
-    /* Estilo de los inputs de texto y número */
-    input[type="text"], 
-    input[type="number"] {
-        width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
-        /* Evita que el input se salga del contenedor */
-        transition: border-color 0.3s ease; }
-
-    input[type="text"]:focus, 
-    input[type="number"]:focus {
-        outline: none; border-color: #4A90E2;
-    }
-
-    /* Estilo del botón */
-    input[type="submit"] {
-        width: 100%; background-color: #4A90E2; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px;
-        font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
-
-    input[type="submit"]:hover {
-        background-color: #357ABD; }
-</style>
-   
+        </head>
+    <body>
+        <!-- Vincular único archivo CSS externo -->
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
     </head>
     <body>
         
-    <div class="form-container">
-    <h2 style="text-align:center;">Ingresar Detalles de Pagos</h2>
-
-    <form action="${pageContext.request.contextPath}/detallepagControlador" method="POST">
-        <label>Nombre Completo:</label>
-        <input type="text" name="idCliente" placeholder="Ej. Juan Andres Silva">
+        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <div class="form-wrapper">
+            <div class="form-container">
+                
+                <!-- Encabezado del Formulario Corregido -->
+                <div class="form-header">
+                    <h2>Ingresar Detalles de Pagos</h2>
+                    <p>
+                        Por favor ingresa los datos de la transacción en cada casilla correspondiente,
+                        con el propósito de brindarle mayor seguridad, validez y un seguimiento優先 a cada orden.
+                    </p>
+                </div>
+                    
+                <!-- FORMULARIO DE INGRESO DE DATOS -->
+                <form action="${pageContext.request.contextPath}/detallepagControlador" method="POST" class="custom-form">
+                    
+                    <!-- Grupo del Formulario en Grid de 2 Columnas -->
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="idCliente">Nombre Completo:</label>
+                            <input class="input-registro" type="text" id="idCliente" name="idCliente" placeholder="Ej: Juan Andrés Silva" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="idPedido">Id Pedido:</label>
+                            <input class="input-registro" type="number" id="idPedido" name="idPedido" placeholder="Ej: 1045" min="1" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="fechRecb">Fecha Recibido:</label>
+                            <input class="input-registro" type="text" id="fechRecb" name="fechRecb" placeholder="Ej: 2026-03-02 17:30:56" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="tcanPago">Total Cancelado ($):</label>
+                            <input class="input-registro" type="number" id="tcanPago" name="tcanPago" placeholder="0.00" step="0.01" required>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="estadoPago">Estado de Pago:</label>
+                            <input class="input-registro" type="text" id="estadoPago" name="estadoPago" placeholder="Ej: Verificado / Pendiente / Enviado" required>
+                        </div>
+                    </div>
+                            
+                    <!-- Botones de Acción Estilizados -->
+                    <div class="form-actions">
+                        <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Pago</button>
+                        <a href="${pageContext.request.contextPath}/detallepagControlador?accion=listado" class="btn-cancel">Cancelar</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
         
-        <label>Id Pedido:</label>
-        <input type="number" name="idPedido" placeholder="1" min="1" required>
-        
-        <label>Fecha recibido:</label>
-        <input type="text" name="fechRecb" placeholder="Ej. 2026-03-02 17:30:56">
-
-        <label>Total Cancelado:</label>
-        <input type="number" name="tcanPago" placeholder="0.00" step="0.01">
-        
-        <label>Estado de Pago</label>
-        <textarea name="estadoPago" rows="3" placeholder="Enviado o Por Enviar..."></textarea>
-      
-        <input type="submit" name="accion" value="Guardar">
-        
-        <a href="detallepagControlador?accion=listado">Cancelar</a>
-    </form>
-          </div>
     </body>
 </html>

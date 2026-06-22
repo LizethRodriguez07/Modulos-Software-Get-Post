@@ -83,53 +83,52 @@ String listar = "vistas/listarChat.jsp";
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8"); // Evita que se dañen caracteres especiales al guardar
         String accion = request.getParameter("accion");
     
-    switch (accion) {
-        case "Guardar" -> {
-            String clienteChat = request.getParameter("clienteChat");
-            String Mensajeria = request.getParameter("Mensajeria");
-            String estadoChat = request.getParameter("estadoChat");
-            
-            cha.setClienteChat(clienteChat);
-            cha.setMensajeria(Mensajeria);
-            cha.setEstadoChat(estadoChat);
-            
-            //Metodo DAO para que guarde
-            chaDAO.agregar(cha);
-            //redireccion por response
-            response.sendRedirect("chatControlador?accion=listado");
+        switch (accion) {
+            case "Guardar" -> {
+                String clienteChat = request.getParameter("clienteChat");
+                String Mensajeria = request.getParameter("Mensajeria");
+                String estadoChat = request.getParameter("estadoChat");
+                
+                cha.setClienteChat(clienteChat);
+                cha.setMensajeria(Mensajeria);
+                cha.setEstadoChat(estadoChat);
+                
+                // Método DAO para que guarde
+                chaDAO.agregar(cha);
+                response.sendRedirect("chatControlador?accion=listado");
             }
     
-        case "Actualizar" -> {
-            String clienteChat = request.getParameter("clienteChat");
-            String Mensajeria = request.getParameter("Mensajeria");
-            String estadoChat = request.getParameter("estadoChat");
-            
-            cha.setClienteChat(clienteChat);
-            cha.setMensajeria(Mensajeria);
-            cha.setEstadoChat(estadoChat);
-            
-            //Metodo DAO para que guarde
-            chaDAO.actualizar(cha);
-            //redireccion por response
-            response.sendRedirect("chatControlador?accion=listado");
+            case "Actualizar" -> {
+                // CORRECCIÓN CRÍTICA: Captura obligatoria del idChat enviado desde el formulario
+                int idChat = Integer.parseInt(request.getParameter("idChat"));
+                String clienteChat = request.getParameter("clienteChat");
+                String Mensajeria = request.getParameter("Mensajeria");
+                String estadoChat = request.getParameter("estadoChat");
+                
+                // Seteo usando tu objeto global incluyendo el ID indispensable para el WHERE SQL
+                cha.setIdChat(idChat); 
+                cha.setClienteChat(clienteChat);
+                cha.setMensajeria(Mensajeria);
+                cha.setEstadoChat(estadoChat);
+                
+                // Método DAO para que actualice
+                chaDAO.actualizar(cha);
+                response.sendRedirect("chatControlador?accion=listado");
+            }
         }
     }
-}
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
