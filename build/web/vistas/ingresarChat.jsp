@@ -19,7 +19,7 @@
     </head>
     <body>
         
-        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <!-- Contenedor Principal -->
         <div class="form-wrapper">
             <div class="form-container">
                 
@@ -35,7 +35,7 @@
                 <!-- FORMULARIO DE INGRESO DE DATOS -->
                 <form action="${pageContext.request.contextPath}/chatControlador" method="POST" class="custom-form">
                     
-                    <!-- Grupo del Formulario en Grid Dinámico -->
+                    
                     <div class="form-grid">
                         
                         <div class="input-group full-width">
