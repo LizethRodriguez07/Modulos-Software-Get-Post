@@ -21,21 +21,21 @@
     <body>
         
         <%
-            // Recuperamos el objeto individual enviado por el Servlet mediante el atributo "lista"
+           
             detallepag dpg = (detallepag) request.getAttribute("lista");
             if (dpg == null) {
                 dpg = new detallepag(); // Respaldo para evitar errores en el servidor
             }
         %>
         
-        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <!-- Contenedor Principal -->
         <div class="form-wrapper">
             <div class="form-container edit-mode">
                 
                 <!-- Encabezado del Formulario de Edición -->
                 <div class="form-header">
                     <h2>
-                        <!-- MEJORA: Título dinámico para saber qué registro se está editando -->
+                        
                         EDITAR DETALLE PAGO N°: <%= dpg.getIdPago() != 0 ? dpg.getIdPago() : "" %>
                     </h2>
                     <p>
@@ -46,15 +46,15 @@
                 <!-- FORMULARIO DE INGRESO DE DATOS -->
                 <form action="${pageContext.request.contextPath}/detallepagControlador" method="POST" class="custom-form">
                     
-                    <!-- CORRECCIÓN CRÍTICA: Forzamos el envío seguro de la acción mediante un input oculto -->
+                    
                     <input type="hidden" name="accion" value="Actualizar">
                     
-                    <!-- Grupo del Formulario en Grid de 2 Columnas -->
+                    
                     <div class="form-grid">
                         
                         <div class="input-group">
                             <label for="idPago">Id (Lectura):</label>
-                            <!-- Se mantiene name="idPago" ya que tu controlador lo captura para el objeto detPg -->
+                            
                             <input class="input-registro" type="text" id="idPago" name="idPago" value="<%= dpg.getIdPago() %>" readonly>
                         </div>
                         
@@ -85,9 +85,9 @@
                         
                     </div>
                 
-                    <!-- Botones de Acción Estilizados -->
+                    <!-- Boton -->
                     <div class="form-actions">
-                        <!-- Se remueven los atributos name y value para evitar el fallo de transmisión del parámetro -->
+                        
                         <button type="submit" class="btn-update">Actualizar Pago</button>
                         <a href="${pageContext.request.contextPath}/detallepagControlador?accion=listado" class="btn-cancel">Cancelar</a>
                     </div>
