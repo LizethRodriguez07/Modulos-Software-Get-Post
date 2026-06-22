@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
 </head>
 <body>
-    <!-- Contenedor general oscuro que hace juego con los formularios -->
+    <!-- Contenedor general -->
     <div class="table-wrapper">
         <div class="table-container">
             
@@ -32,7 +32,7 @@
                 </div>
             </div>
     
-            <!-- Contenedor con scroll horizontal automático para pantallas de celulares -->
+            
             <div class="responsive-table-holder">
                 <table class="custom-premium-table">
                     <thead>
@@ -61,10 +61,10 @@
                                 <td><%= pro.getPrecio()%></td>
                                 <td>
                                     <div class="action-buttons-group">
-                                        <!-- CORRECCIÓN: Se cambió &idproducto= por &idProducto= -->
+                                        
                                         <a href="${pageContext.request.contextPath}/productoControlador?accion=actualizar&idProducto=<%= pro.getIdProducto()%>" class="btn-action-edit">Editar</a>
                                         
-                                        <!-- CORRECCIÓN: Se cambió &idproducto= por &idProducto= -->
+                                        
                                         <a href="${pageContext.request.contextPath}/productoControlador?accion=borrar&idProducto=<%= pro.getIdProducto()%>" class="btn-action-delete" 
                                            onclick="return confirm('¿Estás seguro de eliminar el producto <%= pro.getIdProducto()%> de la base de datos?')">Eliminar</a>
                                     </div>
