@@ -17,19 +17,18 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/estilos.css">
 </head>
 <body>
-    <!-- Contenedor Principal con Fondo Oscuro Premium -->
+    <!-- Contenedor Principal -->
     <div class="form-wrapper">
         <div class="form-container edit-mode">
             
             <%
-                // CORRECCIÓN: Se elimina el bucle FOR y se captura el objeto único enviado desde el Controlador
                 clientes c = (clientes) request.getAttribute("cliente");
                 if (c == null) {
-                    c = new clientes(); // Evita errores de puntero nulo en la página si se accede directamente
+                    c = new clientes(); 
                 }
             %>
             
-            <!-- Encabezado del Formulario Dinámico -->
+            <!-- Encabezado del Formulario -->
             <div class="form-header">
                 <h2>
                     EDITAR CLIENTE: <%= c.getNombre() != null ? c.getNombre() : "" %> <%= c.getApellido() != null ? c.getApellido() : "" %>
@@ -42,12 +41,11 @@
             <!-- FORMULARIO DE INGRESO DE DATOS -->
             <form action="${pageContext.request.contextPath}/clientesControlador" method="POST" class="custom-form">
                 
-                <!-- Grupo del Formulario en Grid de 2 Columnas -->
+                
                 <div class="form-grid">
                     
                     <div class="input-group">
                         <label for="nombre">Nombre (Lectura):</label>
-                        <!-- Se mantiene readonly ya que tu SQL actualiza mediante WHERE nombre=? -->
                         <input class="input-registro" type="text" id="nombre" name="nombre" value="<%= c.getNombre() != null ? c.getNombre() : "" %>" readonly>
                     </div>
                     
@@ -88,10 +86,10 @@
                     
                 </div>
                 
-                <!-- Botones de Acción Estilizados -->
+                <!-- Boton -->
                 <div class="form-actions">
                     <button type="submit" name="accion" value="Actualizar" class="btn-update">Actualizar Cliente</button>
-                    <!-- CORRECCIÓN: Se cambia el enlace directo al jsp por la acción del servlet para recargar la tabla correctamente -->
+                    
                     <a href="${pageContext.request.contextPath}/clientesControlador?accion=listado" class="btn-cancel">Cancelar</a>
                 </div>
                 
