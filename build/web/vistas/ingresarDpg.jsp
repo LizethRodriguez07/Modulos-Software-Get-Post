@@ -23,7 +23,7 @@
     </head>
     <body>
         
-        <!-- Contenedor Principal con Fondo Oscuro Premium -->
+        <!-- Contenedor Principal -->
         <div class="form-wrapper">
             <div class="form-container">
                 
@@ -32,7 +32,7 @@
                     <h2>Ingresar Detalles de Pagos</h2>
                     <p>
                         Por favor ingresa los datos de la transacción en cada casilla correspondiente,
-                        con el propósito de brindarle mayor seguridad, validez y un seguimiento優先 a cada orden.
+                        con el propósito de brindarle mayor seguridad, validez y un seguimiento a cada orden.
                     </p>
                 </div>
                     
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                             
-                    <!-- Botones de Acción Estilizados -->
+                    <!-- Boton -->
                     <div class="form-actions">
                         <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Pago</button>
                         <a href="${pageContext.request.contextPath}/detallepagControlador?accion=listado" class="btn-cancel">Cancelar</a>
