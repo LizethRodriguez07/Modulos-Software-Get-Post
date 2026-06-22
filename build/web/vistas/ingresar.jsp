@@ -36,7 +36,7 @@
                     <!-- FORMULARIO DE INGRESO DE DATOS -->
                 <form action="${pageContext.request.contextPath}/clientesControlador" method="POST" class="custom-form">
                     
-                    <!-- Grupo del Formulario en Grid de 2 Columnas -->
+                    
                     <div class="form-grid">
                         <div class="input-group">
                             <label for="nombre">Nombre:</label>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     
-                    <!-- Botones de Acción -->
+                    <!-- Boton -->
                     <div class="form-actions">
                         <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Cliente</button>
                         <a href="${pageContext.request.contextPath}/index.jsp" class="btn-cancel">Cancelar</a>
