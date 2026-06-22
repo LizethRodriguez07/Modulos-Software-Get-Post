@@ -23,7 +23,7 @@
         <div class="form-wrapper">
             <div class="form-container">
                 
-                <!-- Encabezado del Formulario Corporativo -->
+                <!-- Encabezado del Formulario -->
                 <div class="form-header">
                     <h2>Ingreso de Chat</h2>
                     <p>
@@ -55,7 +55,7 @@
                         
                     </div>
                     
-                    <!-- Botones de Acción Sincronizados con el CSS central -->
+                    <!-- Boton -->
                     <div class="form-actions">
                         <button type="submit" name="accion" value="Guardar" class="btn-submit">Guardar Chat</button>
                         <a href="${pageContext.request.contextPath}/chatControlador?accion=listado" class="btn-cancel">Cancelar</a>
