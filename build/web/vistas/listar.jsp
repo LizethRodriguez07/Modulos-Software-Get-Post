@@ -20,7 +20,7 @@
         
 </head>
 <body>
-    <!-- Contenedor general oscuro que hace juego con los formularios -->
+    <!-- Contenedor general -->
     <div class="table-wrapper">
         <div class="table-container">
             
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <!-- Contenedor con scroll horizontal automático para pantallas de celulares -->
+            
             <div class="responsive-table-holder">
                 <table class="custom-premium-table">
                     <thead>
@@ -68,7 +68,7 @@
                                 <td><%= c.getDireccion()%></td>
                                 <td>
                                     <div class="action-buttons-group">
-                                        <!-- Enlaces que llaman al Servlet pasando la acción y el identificador -->
+                                        <!-- Enlaces que llaman al Servlet -->
                                         <a href="${pageContext.request.contextPath}/clientesControlador?accion=actualizar&nombre=<%= c.getNombre()%>" class="btn-action-edit">Editar</a>
                                         <a href="${pageContext.request.contextPath}/clientesControlador?accion=borrar&nombre=<%= c.getNombre()%>" class="btn-action-delete" 
                                            onclick="return confirm('¿Estás seguro de eliminar a <%= c.getNombre() %> de la base de datos?')">Eliminar</a>
