@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <!-- Contenedor general oscuro que unifica la estética del sistema -->
+    <!-- Contenedor general -->
     <div class="table-wrapper">
         <div class="table-container">
             
@@ -27,14 +27,14 @@
             <div class="table-header-section">
                 <h2>Gestión de Chats y Mensajería</h2>
                 
-                <!-- Grupo de botones de navegación superior corregidos con el contextPath del servidor -->
+                
                 <div class="table-actions-nav">
                     <a href="${pageContext.request.contextPath}/chatControlador?accion=ingresar" class="btn-table-add">Nuevo Registro</a>
                     <a href="${pageContext.request.contextPath}/index.jsp" class="btn-table-menu">Ingresar al Menú</a>
                 </div>
             </div>
 
-            <!-- Contenedor con scroll horizontal automático para pantallas de celulares -->
+            
             <div class="responsive-table-holder">
                 <table class="custom-premium-table">
                     <thead>
@@ -59,7 +59,7 @@
                                 <td><span class="brand-tags"><%= cht.getEstadoChat()%></span></td>
                                 <td>
                                     <div class="action-buttons-group">
-                                        <!-- Enlaces dinámicos corregidos hacia el Servlet utilizando rutas absolutas seguras -->
+                                        
                                         <a href="${pageContext.request.contextPath}/chatControlador?accion=actualizar&idChat=<%= cht.getIdChat()%>" class="btn-action-edit">Editar</a>
                                         <a href="${pageContext.request.contextPath}/chatControlador?accion=borrar&idChat=<%= cht.getIdChat()%>" class="btn-action-delete" 
                                            onclick="return confirm('¿Estás seguro de eliminar el registro de chat #<%= cht.getIdChat() %> de la base de datos?')">Eliminar</a>
