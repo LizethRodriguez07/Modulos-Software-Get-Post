@@ -33,7 +33,7 @@
                     
                     <div class="input-group">
                         <label for="Marca">Marca de Calzado:</label>
-                        <!-- MEJORA: Lista desplegable para unificar los nombres en la base de datos -->
+                        
                         <select class="input-registro" id="Marca" name="Marca" style="width: 100%; height: 44px; background-color: #34495e; color: white; border: 1px solid #4f5d73; border-radius: 4px; padding: 0 10px;" required>
                             <option value="" disabled selected>Seleccione la marca...</option>
                             <option value="NIKE">NIKE</option>
