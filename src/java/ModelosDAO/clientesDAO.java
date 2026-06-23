@@ -20,7 +20,7 @@ public class clientesDAO implements clientesCRUD {
         ArrayList<clientes> listacliente = new ArrayList<>();
         String sql = "SELECT * FROM clientes";
         
-        // Declaración local de variables para evitar conflictos entre múltiples usuarios
+        // Declaración local de variables 
         Connection conexion = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
