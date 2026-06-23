@@ -111,20 +111,18 @@ public detallepag listarundetallepag(int idPago) {
 
 @Override
 public boolean actualizar(detallepag dpg) {
-        // SOLUCIÓN 1 y 2: Nombre de tabla 'detallpago' y columnas de pago reales corregidas
+        
         String sql = "UPDATE detallpago SET idCliente=?, idPedido=?, fechRecb=?, tcanPago=?, estadoPago=? WHERE idPago=?";
         try {
             conexion = conectar.getConnection();
             ps = conexion.prepareStatement(sql);
             
-            // Inyección de parámetros respetando tu objeto dpg
             ps.setString(1, dpg.getIdCliente());
             ps.setString(2, dpg.getIdPedido());
             ps.setString(3, dpg.getFechRecb());
             ps.setString(4, dpg.getTcanPago());
             ps.setString(5, dpg.getEstadoPago());
-            
-            // SOLUCIÓN 3: Agregamos el parámetro obligatorio número 6 para el WHERE
+        
             ps.setInt(6, dpg.getIdPago());
             
             int resultado = ps.executeUpdate();
