@@ -78,9 +78,8 @@ public class productoDAO implements productoCRUD {
     
     @Override
     public producto listarunproducto(int idProducto) {
-        // CORRECCIÓN: Se cambió idProducto por idproducto en minúscula para coincidir con la BD
         String sql = "SELECT * FROM producto WHERE idproducto = ?";
-        // CORRECCIÓN CRÍTICA: Crear un objeto local para que no interfiera con consultas globales
+        
         producto prduct = new producto(); 
         try {
             conexion = conectar.getConnection();
