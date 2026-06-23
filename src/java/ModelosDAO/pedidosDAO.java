@@ -11,12 +11,12 @@ import java.util.List;
 import Interfaces.pedidosCRUD;
 
 public class pedidosDAO implements pedidosCRUD{
-    // Instanciamiento de conexión original intacto
+   
     ConexionDB  conectar = new ConexionDB();
     Connection conexion;
     PreparedStatement ps;
     ResultSet rs;
-    // Instanciamiento de funcionario original intacto
+   
     pedidos pedid = new pedidos();
     
     @Override // Se trae la interfaz CRUD
@@ -54,16 +54,15 @@ public class pedidosDAO implements pedidosCRUD{
         return listapedidos;
     }
 
-    // Nuevo método para insertar CORREGIDO sin alterar variables
+    
     @Override
     public boolean agregar(pedidos pedid){
-        // CORRECCIÓN: Nombres de columnas mapeados idénticos al SELECT y exactamente 8 signos de interrogación
+        
         String sql = "INSERT INTO pedidos(fechaPedido, nomCliente, totalPg, medioPago, descriPcion, teleFono, direCcion, selecEstado) VALUES(?,?,?,?,?,?,?,?)";
         try {
             conexion = conectar.getConnection();
             ps = conexion.prepareStatement(sql);
-            
-            // Inyección de datos respetando tu variable 'pedid'
+        
             ps.setString(1, pedid.getFechaPedido());
             ps.setString(2, pedid.getNomCliente());
             ps.setString(3, pedid.getTotalPg());
@@ -79,7 +78,7 @@ public class pedidosDAO implements pedidosCRUD{
             System.err.println("Error al agregar: " + e);
             return false;
         } finally {
-            // CORRECCIÓN: Liberación de canales de datos para evitar bloqueos en el pool de conexiones
+            
             try {
                 if (ps != null) ps.close();
                 if (conexion != null) conexion.close();
@@ -136,7 +135,7 @@ public class pedidosDAO implements pedidosCRUD{
         ps.setString(6, pedid.getTeleFono());
         ps.setString(7, pedid.getDireCcion());
         
-        // SOLUCIÓN: Asegurar que se inyecte el método correcto en la posición 8
+       
         ps.setString(8, pedid.getSelecEstado()); 
         
         ps.setInt(9, pedid.getIdP());
