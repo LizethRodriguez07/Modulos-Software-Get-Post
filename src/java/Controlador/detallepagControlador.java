@@ -15,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 public class detallepagControlador extends HttpServlet {
     
     String listar = "vistas/listarDpg.jsp";
-    // Mantenemos tus variables globales exactamente iguales
     detallepag detPg = new detallepag();
     detallepagDAO dpagoDAO = new detallepagDAO();
    
@@ -99,7 +98,6 @@ public class detallepagControlador extends HttpServlet {
                 String tcanPago = request.getParameter("tcanPago");
                 String estadoPago = request.getParameter("estadoPago");
                 
-                // MEJORA: Remueve la "T" del calendario datetime-local y estandariza para la BD DATETIME
                 if (fechRecb != null && fechRecb.contains("T")) {
                     fechRecb = fechRecb.replace("T", " ");
                     if (fechRecb.length() == 16) { 
@@ -127,7 +125,7 @@ public class detallepagControlador extends HttpServlet {
                 String tcanPago = request.getParameter("tcanPago");
                 String estadoPago = request.getParameter("estadoPago");
                 
-                // MEJORA: Remueve la "T" del calendario datetime-local en la actualización
+               
                 if (fechRecb != null && fechRecb.contains("T")) {
                     fechRecb = fechRecb.replace("T", " ");
                     if (fechRecb.length() == 16) {
