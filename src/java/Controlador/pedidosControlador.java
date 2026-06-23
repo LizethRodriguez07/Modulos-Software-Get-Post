@@ -104,8 +104,7 @@ String listar = "vistas/listarPedidos.jsp";
                 String descriPcion = request.getParameter("descriPcion");
                 String teleFono = request.getParameter("teleFono");
                 String direCcion = request.getParameter("direCcion");
-                
-                // SOLUCIÓN 3: Captura el parámetro correcto según el name="estadoPago" del JSP
+        
                 String selecEstado = request.getParameter("estadoPago");
                 
                 pedd.setFechaPedido(fechaPedido);
@@ -131,7 +130,7 @@ String listar = "vistas/listarPedidos.jsp";
     String teleFono = request.getParameter("teleFono");
     String direCcion = request.getParameter("direCcion");
     
-    // SOLUCIÓN: Cambiar request.getParameter("selecEstado") por "estadoPago"
+   
     String selecEstado = request.getParameter("estadoPago");
     
     pedd.setIdP(idP);
@@ -158,6 +157,6 @@ String listar = "vistas/listarPedidos.jsp";
      */
     @Override
     public String getServletInfo() {
-        return "Controlador de Pedidos Corporativo - STORE DANY";
+        return "Controlador de Pedidos - STORE DANY";
     }
 }
